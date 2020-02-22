@@ -153,7 +153,7 @@ gulp.task(
 
 gulp.task(
   "helm",
-  gulp.series(build, dockerBuild, dockerPush, helmPush, createHelmUpgrade())
+  gulp.series(build, dockerBuild, dockerPush, createHelmUpgrade())
 );
 
 gulp.task(

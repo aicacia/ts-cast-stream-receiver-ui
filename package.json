@@ -35,18 +35,19 @@
     "production": {
       "DOCKER_REGISTRY": "registry.aicacia.com",
       "HELM_REPO": "https://chartmuseum.aicacia.com",
-      "APP_WS_URL": "wss://api.p2p.aicacia.com"
+      "APP_WS_URL": "wss://api.p2p.aicacia.com",
+      "APP_STUN_URL": "stun://api.p2p.aicacia:3478"
     },
     "development": {
       "DOCKER_REGISTRY": "registry.local-k8s.com",
       "HELM_REPO": "http://chartmuseum.local-k8s.com",
-      "APP_WS_URL": "ws://api.p2p.local-k8s.com"
+      "APP_WS_URL": "ws://api.p2p.local-k8s.com",
+      "APP_STUN_URL": "stun://api.p2p.local-k8s.com:3478"
     }
   },
   "devDependencies": {
     "@types/chromecast-caf-receiver": "^5.0.2",
     "@types/node": "^12.12.12",
-    "chromecast-device-emulator": "^1.2.7",
     "del": "^5.1.0",
     "gulp": "^4.0.2",
     "gulp-cli": "^2.2.0",
@@ -60,6 +61,7 @@
   },
   "dependencies": {
     "@aicacia/hash": "^0.1.2",
+    "@aicacia/json": "^0.1.1",
     "core-js": "^3.6.4",
     "ts-polyfill": "^3.7.5"
   }

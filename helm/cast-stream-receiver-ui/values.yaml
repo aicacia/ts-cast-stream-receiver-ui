@@ -10,7 +10,9 @@ image:
   pullPolicy: Always
   hash: sha256:f191bb18187c583aabdd8519159f6d80ea86eef5f617fbb7f213c420287e31e8
 
-env: {}
+env:
+  APP_WS_URL: wss://api.p2p.aicacia.com
+  APP_STUN_URL: stun://api.p2p.aicacia.com:3478
 
 imagePullSecrets: []
 nameOverride: ""
@@ -40,8 +42,8 @@ resources:
     cpu: 100m
     memory: 128Mi
   requests:
-    cpu: 25m
-    memory: 64Mi
+    cpu: 50m
+    memory: 96Mi
 
 nodeSelector: {}
 

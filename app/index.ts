@@ -4,7 +4,7 @@ import { hash } from "@aicacia/hash";
 import packageJson from "../package.json";
 
 const NAMSPACE = "urn:x-cast:aicacia",
-  MEDIA_ID = "media";
+  VIDEO_ID = "video";
 
 const pc = new RTCPeerConnection({
   iceServers: [
@@ -37,13 +37,15 @@ function onLoad() {
 }
 
 function onResize() {
-  const context = cast.framework.CastReceiverContext.getInstance();
-
-  context.sendCustomMessage(NAMSPACE, undefined as any, {
-    type: "resize",
-    width: window.innerWidth,
-    height: window.innerHeight
-  });
+  cast.framework.CastReceiverContext.getInstance().sendCustomMessage(
+    NAMSPACE,
+    undefined as any,
+    {
+      type: "resize",
+      width: window.innerWidth,
+      height: window.innerHeight
+    }
+  );
 }
 
 export function onInit() {
@@ -70,7 +72,7 @@ export function onInit() {
 
   pc.addEventListener("track", event => {
     console.log("track", event);
-    const media = document.getElementById(MEDIA_ID) as HTMLVideoElement;
+    const media = document.getElementById(VIDEO_ID) as HTMLVideoElement;
     media.srcObject = event.streams[0];
   });
 

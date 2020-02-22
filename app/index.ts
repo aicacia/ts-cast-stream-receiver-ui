@@ -29,8 +29,8 @@ function onLoad() {
 
   context.addEventListener(cast.framework.system.EventType.READY, event => {
     console.log(cast.framework.system.EventType.READY, event);
-    onResize();
     onInit();
+    onResize();
   });
 
   context.start(options);
@@ -74,6 +74,7 @@ export function onInit() {
     console.log("track", event);
     const media = document.getElementById(VIDEO_ID) as HTMLVideoElement;
     media.srcObject = event.streams[0];
+    onResize();
   });
 
   cast.framework.CastReceiverContext.getInstance().addCustomMessageListener(

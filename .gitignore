@@ -1,0 +1,8 @@
+/build
+/app/locales
+/.cache
+node_modules
+npm-debug.log
+.editorconfig
+.envrc*
+!.envrc.example

@@ -1,0 +1,66 @@
+{
+  "name": "cast-stream-receiver-ui",
+  "version": "0.1.0",
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">=6.0.0"
+  },
+  "engineStrict": true,
+  "description": "aicacia cast-stream-receiver ui",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/aicacia/ts-cast-stream-receiver-ui.git"
+  },
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "module": "./app/index.ts",
+  "scripts": {
+    "test": "ts-node test/index.ts",
+    "format.ts": "prettier-tslint fix '**/*.{ts,tsx}'",
+    "format.js": "prettier --write '**/*.{js,jsx,json}' --ignore-path .gitignore",
+    "format": "npm run format.ts && npm run format.js",
+    "lint": "tslint -c tslint.json 'app/**/*.{ts,tsx}'",
+    "plop": "plop",
+    "gulp": "gulp"
+  },
+  "keywords": [
+    "aicacia",
+    "cast-stream-receiver",
+    "ui"
+  ],
+  "author": "Nathan Faucett",
+  "license": "(MIT OR Apache-2.0)",
+  "readmeFilename": "README.md",
+  "env": {
+    "production": {
+      "DOCKER_REGISTRY": "registry.aicacia.com",
+      "HELM_REPO": "https://chartmuseum.aicacia.com",
+      "APP_WS_URL": "wss://api.p2p.aicacia.com"
+    },
+    "development": {
+      "DOCKER_REGISTRY": "registry.local-k8s.com",
+      "HELM_REPO": "http://chartmuseum.local-k8s.com",
+      "APP_WS_URL": "ws://api.p2p.local-k8s.com"
+    }
+  },
+  "devDependencies": {
+    "@types/chromecast-caf-receiver": "^5.0.2",
+    "@types/node": "^12.12.12",
+    "chromecast-device-emulator": "^1.2.7",
+    "del": "^5.1.0",
+    "gulp": "^4.0.2",
+    "gulp-cli": "^2.2.0",
+    "parcel-bundler": "^1.12.4",
+    "prettier": "^1.19.1",
+    "prettier-tslint": "^0.4.2",
+    "ts-node": "^8.6.2",
+    "tslint": "^5.20.1",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.8.2"
+  },
+  "dependencies": {
+    "@aicacia/hash": "^0.1.2",
+    "core-js": "^3.6.4",
+    "ts-polyfill": "^3.7.5"
+  }
+}

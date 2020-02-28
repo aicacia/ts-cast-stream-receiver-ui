@@ -35,14 +35,12 @@
     "production": {
       "DOCKER_REGISTRY": "registry.aicacia.com",
       "HELM_REPO": "https://chartmuseum.aicacia.com",
-      "APP_WS_URL": "wss://api.p2p.aicacia.com",
-      "APP_STUN_URL": "stun://api.p2p.aicacia:3478"
+      "APP_STUN_URL": "stun:stun.l.google.com:19302"
     },
     "development": {
       "DOCKER_REGISTRY": "registry.local-k8s.com",
       "HELM_REPO": "http://chartmuseum.local-k8s.com",
-      "APP_WS_URL": "ws://api.p2p.local-k8s.com",
-      "APP_STUN_URL": "stun://api.p2p.local-k8s.com:3478"
+      "APP_STUN_URL": "stun:stun.l.google.com:19302"
     }
   },
   "devDependencies": {

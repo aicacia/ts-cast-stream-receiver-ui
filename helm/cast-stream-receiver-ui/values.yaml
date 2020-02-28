@@ -11,8 +11,7 @@ image:
   hash: sha256:f191bb18187c583aabdd8519159f6d80ea86eef5f617fbb7f213c420287e31e8
 
 env:
-  APP_WS_URL: wss://api.p2p.aicacia.com
-  APP_STUN_URL: stun://api.p2p.aicacia.com:3478
+  APP_STUN_URL: stun:stun.l.google.com:19302
 
 imagePullSecrets: []
 nameOverride: ""
@@ -30,7 +29,7 @@ ingress:
     nginx.ingress.kubernetes.io/secure-backends: "true"
   hosts:
     - host: cast-stream-receiver.aicacia.com
-      paths: 
+      paths:
         - /
   tls:
     - hosts:

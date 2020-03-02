@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "cast-stream-receiver-ui.fullname" . }}
+  name: {{ include "aicacia-cast-stream-receiver-ui.fullname" . }}
   labels:
-    {{- include "cast-stream-receiver-ui.labels" . | nindent 4 }}
+    {{- include "aicacia-cast-stream-receiver-ui.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "cast-stream-receiver-ui.selectorLabels" . | nindent 6 }}
+      {{- include "aicacia-cast-stream-receiver-ui.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       annotations:
         checksum/config-environment: {{ include (print $.Template.BasePath "/config-environment.yaml") . | sha256sum }}
         image/hash: {{ .Values.image.hash }}
       labels:
-        {{- include "cast-stream-receiver-ui.selectorLabels" . | nindent 8 }}
+        {{- include "aicacia-cast-stream-receiver-ui.selectorLabels" . | nindent 8 }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
@@ -27,7 +27,7 @@ spec:
               protocol: TCP
           envFrom:
             - configMapRef:
-                name: {{ include "cast-stream-receiver-ui.fullname" . }}-environment
+                name: {{ include "aicacia-cast-stream-receiver-ui.fullname" . }}-environment
           livenessProbe:
             httpGet:
               path: /

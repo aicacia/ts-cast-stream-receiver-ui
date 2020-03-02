@@ -2,7 +2,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "cast-stream-receiver-ui.name" -}}
+{{- define "aicacia-cast-stream-receiver-ui.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
@@ -11,7 +11,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "cast-stream-receiver-ui.fullname" -}}
+{{- define "aicacia-cast-stream-receiver-ui.fullname" -}}
 {{- if .Values.fullnameOverride -}}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
@@ -27,16 +27,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "cast-stream-receiver-ui.chart" -}}
+{{- define "aicacia-cast-stream-receiver-ui.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
 Common labels
 */}}
-{{- define "cast-stream-receiver-ui.labels" -}}
-helm.sh/chart: {{ include "cast-stream-receiver-ui.chart" . }}
-{{ include "cast-stream-receiver-ui.selectorLabels" . }}
+{{- define "aicacia-cast-stream-receiver-ui.labels" -}}
+helm.sh/chart: {{ include "aicacia-cast-stream-receiver-ui.chart" . }}
+{{ include "aicacia-cast-stream-receiver-ui.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -46,7 +46,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "cast-stream-receiver-ui.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "cast-stream-receiver-ui.name" . }}
+{{- define "aicacia-cast-stream-receiver-ui.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "aicacia-cast-stream-receiver-ui.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}

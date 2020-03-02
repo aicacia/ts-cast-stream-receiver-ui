@@ -9,13 +9,14 @@ const { HELM_REPO_USERNAME, HELM_REPO_PASSWORD, NODE_ENV } = process.env,
   IS_TEST = NODE_ENV === "test",
   IS_DEV = !IS_PROD,
   PACKAGE_NAME = package.name,
+  ORGANIZATION = package.organization,
   VERSION = package.version,
   { DOCKER_REGISTRY, HELM_REPO } = IS_PROD
     ? package.env.production
     : package.env.development,
   NAMESPACE = "ui",
   NAME = PACKAGE_NAME.replace(/[\._]+/g, "-"),
-  HELM_DIR = `./helm/${package.name}`;
+  HELM_DIR = `./helm/${ORGANIZATION}-${PACKAGE_NAME}`;
 
 const createErrorHandlerExit = callback => code =>
   code !== 0
@@ -123,7 +124,7 @@ const createHelmInstall = values => callback =>
     `helm install ${NAME} ${HELM_DIR} --namespace=${NAMESPACE}  ${helmOverrides()} ${
       values ? `--values ${values}` : ""
     }`,
-    callbac
+    callback
   );
 
 gulp.task("helm.install", createHelmInstall());

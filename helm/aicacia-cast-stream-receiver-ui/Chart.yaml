@@ -1,0 +1,6 @@
+apiVersion: v2
+name: aicacia-cast-stream-receiver-ui
+description: aicacia cast-stream-receiver ui
+type: application
+version: 0.1.0
+appVersion: 0.1.0

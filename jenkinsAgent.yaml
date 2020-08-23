@@ -11,6 +11,13 @@ spec:
       volumeMounts:
         - name: dockersock
           mountPath: /var/run/docker.sock
+      resources:
+        requests:
+          memory: "128Mi"
+          cpu: "100m"
+        limits:
+          memory: "1Gi"
+          cpu: 1
   volumes:
     - name: dockersock
       hostPath:

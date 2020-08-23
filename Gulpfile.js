@@ -18,7 +18,7 @@ const { HELM_REPO_USERNAME, HELM_REPO_PASSWORD, NODE_ENV } = process.env,
   NAME = PACKAGE_NAME.replace(/[\._]+/g, "-"),
   HELM_DIR = `./helm/${ORGANIZATION}-${PACKAGE_NAME}`;
 
-const createErrorHandlerExit = callback => code =>
+const createErrorHandlerExit = (callback) => (code) =>
   code !== 0
     ? callback(new Error(`child process exited with code ${code}`))
     : callback();
@@ -36,7 +36,7 @@ const exec = (cmd, callback, createErrorHandler = createErrorHandlerExit) => {
 };
 
 const execIgnoreFailure = (cmd, callback) =>
-  exec(cmd, callback, callback => () => callback());
+  exec(cmd, callback, (callback) => () => callback());
 
 /* Build 
 ================================================ */
@@ -50,8 +50,8 @@ gulp.task("clean", clean);
 
 const createParcelTask = (serve = false) => {
   const parcel = () => {
-    const bundler = new ParcelBundler("./app/index.html", {
-      outDir: "./build",
+    const bundler = new ParcelBundler("src/index.html", {
+      outDir: "build",
       outFile: "index.html",
 
       cache: IS_DEV,
@@ -64,7 +64,7 @@ const createParcelTask = (serve = false) => {
       target: "browser",
       https: IS_PROD,
 
-      logLevel: 3
+      logLevel: 3,
     });
 
     if (serve) {
@@ -97,18 +97,18 @@ gulp.task("default", start);
 const dockerRepository = () => `${DOCKER_REGISTRY}/ui/${NAME}`;
 const dockerTag = () => `${dockerRepository()}:${VERSION}`;
 
-const dockerBuild = callback =>
+const dockerBuild = (callback) =>
   exec(`docker build -t ${dockerTag()} .`, callback);
 
 gulp.task("docker.build", dockerBuild);
 
-const dockerPush = callback => exec(`docker push ${dockerTag()}`, callback);
+const dockerPush = (callback) => exec(`docker push ${dockerTag()}`, callback);
 
 gulp.task("docker.push", dockerPush);
 
 /* Helm 
 ================================================ */
-const helmPush = callback =>
+const helmPush = (callback) =>
   exec(
     `cd ${HELM_DIR} && helm push . ${HELM_REPO} --email="${HELM_REPO_USERNAME}" --password="${HELM_REPO_PASSWORD}"`,
     callback
@@ -119,7 +119,7 @@ gulp.task("helm.push", helmPush);
 const helmOverrides = () =>
   `--set image.tag=${VERSION} --set image.repository=${dockerRepository()} --set image.hash=$(docker inspect --format='{{index .Id}}' ${dockerTag()})`;
 
-const createHelmInstall = values => callback =>
+const createHelmInstall = (values) => (callback) =>
   exec(
     `helm install ${NAME} ${HELM_DIR} --namespace=${NAMESPACE}  ${helmOverrides()} ${
       values ? `--values ${values}` : ""
@@ -133,12 +133,12 @@ gulp.task(
   createHelmInstall(`${HELM_DIR}/values-local.yaml`)
 );
 
-const helmDelete = callback =>
+const helmDelete = (callback) =>
   execIgnoreFailure(`helm delete ${NAME} --namespace=${NAMESPACE}`, callback);
 
 gulp.task("helm.delete", helmDelete);
 
-const createHelmUpgrade = values => callback =>
+const createHelmUpgrade = (values) => (callback) =>
   exec(
     `helm upgrade ${NAME} ${HELM_DIR} --namespace=${NAMESPACE} --install ${helmOverrides()} ${
       values ? `--values ${values}` : ""

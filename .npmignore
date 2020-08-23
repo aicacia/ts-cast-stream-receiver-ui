@@ -1,9 +1,0 @@
-/build
-/app/locales
-/.cache
-/.vscode
-node_modules
-npm-debug.log
-.editorconfig
-.gitignore
-.envrc*

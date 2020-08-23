@@ -9,9 +9,9 @@ const NAMSPACE = "urn:x-cast:aicacia",
 const pc = new RTCPeerConnection({
   iceServers: [
     {
-      urls: window.env.APP_STUN_URL
-    }
-  ]
+      urls: window.env.APP_STUN_URL,
+    },
+  ],
 });
 
 function onLoad() {
@@ -27,7 +27,7 @@ function onLoad() {
       : cast.framework.LoggerLevel.DEBUG
   );
 
-  context.addEventListener(cast.framework.system.EventType.READY, event => {
+  context.addEventListener(cast.framework.system.EventType.READY, (event) => {
     console.log(cast.framework.system.EventType.READY, event);
     onInit();
     onResize();
@@ -43,13 +43,13 @@ function onResize() {
     {
       type: "resize",
       width: window.innerWidth,
-      height: window.innerHeight
+      height: window.innerHeight,
     }
   );
 }
 
 export function onInit() {
-  pc.addEventListener("icecandidate", event => {
+  pc.addEventListener("icecandidate", (event) => {
     console.log("icecandidate", event);
     if (event.candidate) {
       cast.framework.CastReceiverContext.getInstance().sendCustomMessage(
@@ -57,7 +57,7 @@ export function onInit() {
         undefined as any,
         {
           type: "candidate",
-          candidate: event.candidate
+          candidate: event.candidate,
         }
       );
     }
@@ -70,7 +70,7 @@ export function onInit() {
       .catch(createOnError("negotiationneeded"));
   });
 
-  pc.addEventListener("track", event => {
+  pc.addEventListener("track", (event) => {
     console.log("track", event);
     const media = document.getElementById(VIDEO_ID) as HTMLVideoElement;
     media.srcObject = event.streams[0];
@@ -79,7 +79,7 @@ export function onInit() {
 
   cast.framework.CastReceiverContext.getInstance().addCustomMessageListener(
     NAMSPACE,
-    event => {
+    (event) => {
       const data = (event as any).data;
 
       switch (data.type) {

@@ -94,7 +94,9 @@ gulp.task("default", start);
 
 /* Docker 
 ================================================ */
-const dockerRepository = () => `${DOCKER_REGISTRY}/ui/${NAME}`;
+// const dockerRepository = () => `${DOCKER_REGISTRY}/ui/${NAME}`;
+const dockerRepository = () =>
+  `registry.gitlab.com/aicacia/ts-cast-stream-receiver-ui`;
 const dockerTag = () => `${dockerRepository()}:${VERSION}`;
 
 const dockerBuild = (callback) =>

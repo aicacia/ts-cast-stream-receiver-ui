@@ -37,15 +37,9 @@ ingress:
       secretName: cast-stream-receiver-aicacia-com-crt
 
 resources:
-  limits:
-    cpu: 100m
-    memory: 128Mi
   requests:
-    cpu: 50m
+    cpu: 15m
     memory: 96Mi
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
+  limits:
+    cpu: 30m
+    memory: 128Mi

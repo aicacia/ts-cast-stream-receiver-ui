@@ -15,9 +15,15 @@
   },
   "main": "./src/index.html",
   "scripts": {
+    "gulp": "gulp",
     "lint": "eslint . --fix",
-    "plop": "plop",
-    "gulp": "gulp"
+    "prettier": "prettier --ignore-path ./.eslintignore --ignore-unknown --write .",
+    "preCommit": "npm run prettier && npm run lint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run preCommit"
+    }
   },
   "keywords": [
     "aicacia",
@@ -27,38 +33,29 @@
   "author": "Nathan Faucett",
   "license": "(MIT OR Apache-2.0)",
   "readmeFilename": "README.md",
-  "env": {
-    "production": {
-      "DOCKER_REGISTRY": "registry.aicacia.com",
-      "HELM_REPO": "https://chartmuseum.aicacia.com",
-      "APP_STUN_URL": "stun:stun.l.google.com:19302"
-    },
-    "development": {
-      "DOCKER_REGISTRY": "registry.local-k8s.com",
-      "HELM_REPO": "http://chartmuseum.local-k8s.com",
-      "APP_STUN_URL": "stun:stun.l.google.com:19302"
-    }
-  },
   "devDependencies": {
-    "@types/chromecast-caf-receiver": "^5.0.12",
-    "@types/node": "^14.14.2",
-    "@typescript-eslint/eslint-plugin": "^4.5.0",
-    "@typescript-eslint/parser": "^4.5.0",
-    "eslint": "^7.11.0",
-    "eslint-config-prettier": "^6.14.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "prettier": "^2.1.2",
-    "del": "^6.0.0",
-    "gulp": "^4.0.2",
-    "gulp-cli": "^2.3.0",
-    "parcel-bundler": "^1.12.4",
-    "typescript": "^4.0.3"
+    "@types/chromecast-caf-receiver": "5",
+    "@types/gulp": "4",
+    "@types/node": "14",
+    "@typescript-eslint/eslint-plugin": "4",
+    "@typescript-eslint/parser": "4",
+    "del": "6",
+    "eslint": "7",
+    "eslint-config-prettier": "7",
+    "eslint-plugin-prettier": "3",
+    "gulp": "4",
+    "gulp-cli": "2",
+    "husky": "4",
+    "parcel-bundler": "1",
+    "prettier": "2",
+    "ts-node": "9",
+    "tslib": "2",
+    "typescript": "4"
   },
   "dependencies": {
-    "@aicacia/hash": "^0.1.5",
-    "@aicacia/json": "^0.1.4",
-    "core-js": "^3.6.5",
-    "tslib": "^2.0.3",
-    "ts-polyfill": "^3.8.2"
+    "@aicacia/hash": "0",
+    "@aicacia/json": "0",
+    "core-js": "3",
+    "ts-polyfill": "3"
   }
 }

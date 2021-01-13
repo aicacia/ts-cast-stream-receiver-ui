@@ -1,16 +1,16 @@
 {
   "compilerOptions": {
     "importHelpers": true,
-    "target": "es5",
-    "module": "esnext",
+    "target": "ES2015",
+    "module": "commonjs",
     "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "jsx": "react",
     "declaration": true,
+    "outDir": "lib",
     "strict": true,
-    "types": ["node"],
-    "lib": ["esnext", "dom"]
-  }
+    "downlevelIteration": true,
+    "resolveJsonModule": true,
+    "lib": ["esnext"]
+  },
+  "include": ["src", "Gulpfile.ts"],
+  "exclude": ["src/**/*.test.*"]
 }

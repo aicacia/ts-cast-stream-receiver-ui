@@ -1,14 +1,12 @@
 # ts-cast-stream-receiver-ui
 
+[![license](https://img.shields.io/badge/license-MIT%2FApache--2.0-blue")](LICENSE-MIT)
+[![site](https://img.shields.io/badge/www-cast_stream_receiver_ui-blue.svg)](https://aicacia.github.io/ts-cast-stream-receiver-ui/)
+[![build](https://github.com/aicacia/ts-core/workflows/Test/badge.svg)](https://github.com/aicacia/ts-cast-stream-receiver-ui/actions?query=workflow%3ATest)
+
 cast-stream-receiver ui
 
 ## up and running
-
-install [direnv](https://direnv.net/)
-
-```bash
-$ cp .envrc.example .envrc
-```
 
 start the app in dev
 

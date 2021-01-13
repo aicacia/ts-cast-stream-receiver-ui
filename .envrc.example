@@ -1,2 +1,0 @@
-export HELM_REPO_USERNAME="user"
-export HELM_REPO_PASSWORD="password"

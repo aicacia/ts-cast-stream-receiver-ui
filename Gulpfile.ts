@@ -1,29 +1,31 @@
-const gulp = require("gulp"),
-  ParcelBundler = require("parcel-bundler"),
-  del = require("del"),
-  { spawn } = require("child_process"),
-  package = require("./package.json");
+import gulp = require("gulp");
+// @ts-ignore
+import ParcelBundler = require("parcel-bundler");
+import del = require("del");
+import { spawn } from "child_process";
+import packageJson = require("./package.json");
 
-const { HELM_REPO_USERNAME, HELM_REPO_PASSWORD, NODE_ENV } = process.env,
-  IS_PROD = NODE_ENV === "production",
-  IS_TEST = NODE_ENV === "test",
+const IS_PROD = process.env.NODE_ENV === "production",
   IS_DEV = !IS_PROD,
-  PACKAGE_NAME = package.name,
-  ORGANIZATION = package.organization,
-  VERSION = package.version,
-  { DOCKER_REGISTRY, HELM_REPO } = IS_PROD
-    ? package.env.production
-    : package.env.development,
+  PACKAGE_NAME = packageJson.name,
+  ORGANIZATION = packageJson.organization,
+  VERSION = packageJson.version,
   NAMESPACE = "ui",
   NAME = PACKAGE_NAME.replace(/[\._]+/g, "-"),
   HELM_DIR = `./helm/${ORGANIZATION}-${PACKAGE_NAME}`;
 
-const createErrorHandlerExit = (callback) => (code) =>
+const createErrorHandlerExit = (callback: (error?: Error) => void) => (
+  code: number
+) =>
   code !== 0
     ? callback(new Error(`child process exited with code ${code}`))
     : callback();
 
-const exec = (cmd, callback, createErrorHandler = createErrorHandlerExit) => {
+const exec = (
+  cmd: string,
+  callback: (error?: Error) => void,
+  createErrorHandler = createErrorHandlerExit
+) => {
   const child = spawn(cmd, { stdio: "inherit", shell: true });
   const exit = createErrorHandler(callback);
 
@@ -35,7 +37,7 @@ const exec = (cmd, callback, createErrorHandler = createErrorHandlerExit) => {
   child.on("exit", exit);
 };
 
-const execIgnoreFailure = (cmd, callback) =>
+const execIgnoreFailure = (cmd: string, callback: (error?: Error) => void) =>
   exec(cmd, callback, (callback) => () => callback());
 
 /* Build 
@@ -53,16 +55,16 @@ const createParcelTask = (serve = false) => {
     const bundler = new ParcelBundler("src/index.html", {
       outDir: "build",
       outFile: "index.html",
+      publicUrl: (packageJson as any).homepage,
 
       cache: IS_DEV,
-      cacheDir: ".cache",
       minify: IS_PROD,
 
       hmr: IS_DEV,
       watch: serve === true,
 
       target: "browser",
-      https: IS_PROD,
+      https: false,
 
       logLevel: 3,
     });
@@ -99,29 +101,22 @@ const dockerRepository = () =>
   `registry.gitlab.com/aicacia/ts-cast-stream-receiver-ui`;
 const dockerTag = () => `${dockerRepository()}:${VERSION}`;
 
-const dockerBuild = (callback) =>
+const dockerBuild = (callback: () => void) =>
   exec(`docker build -t ${dockerTag()} .`, callback);
 
 gulp.task("docker.build", dockerBuild);
 
-const dockerPush = (callback) => exec(`docker push ${dockerTag()}`, callback);
+const dockerPush = (callback: () => void) =>
+  exec(`docker push ${dockerTag()}`, callback);
 
 gulp.task("docker.push", dockerPush);
 
 /* Helm 
 ================================================ */
-const helmPush = (callback) =>
-  exec(
-    `cd ${HELM_DIR} && helm push . ${HELM_REPO} --email="${HELM_REPO_USERNAME}" --password="${HELM_REPO_PASSWORD}"`,
-    callback
-  );
-
-gulp.task("helm.push", helmPush);
-
 const helmOverrides = () =>
   `--set image.tag=${VERSION} --set image.repository=${dockerRepository()} --set image.hash=$(docker inspect --format='{{index .Id}}' ${dockerTag()})`;
 
-const createHelmInstall = (values) => (callback) =>
+const createHelmInstall = (values = "") => (callback: () => void) =>
   exec(
     `helm install ${NAME} ${HELM_DIR} --namespace=${NAMESPACE}  ${helmOverrides()} ${
       values ? `--values ${values}` : ""
@@ -135,12 +130,12 @@ gulp.task(
   createHelmInstall(`${HELM_DIR}/values-local.yaml`)
 );
 
-const helmDelete = (callback) =>
+const helmDelete = (callback: () => void) =>
   execIgnoreFailure(`helm delete ${NAME} --namespace=${NAMESPACE}`, callback);
 
 gulp.task("helm.delete", helmDelete);
 
-const createHelmUpgrade = (values) => (callback) =>
+const createHelmUpgrade = (values = "") => (callback: () => void) =>
   exec(
     `helm upgrade ${NAME} ${HELM_DIR} --namespace=${NAMESPACE} --install ${helmOverrides()} ${
       values ? `--values ${values}` : ""

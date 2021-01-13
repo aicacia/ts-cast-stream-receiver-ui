@@ -1,0 +1,26 @@
+name: Test
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - run: npm ci
+      - run: npm install json -g
+      - run: json -I -f package.json -e 'this.homepage="https://aicacia.github.io/ts-cast-stream-receiver-ui/"'
+      - run: NODE_ENV=production npm run gulp build
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build

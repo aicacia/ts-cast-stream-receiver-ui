@@ -9,7 +9,7 @@ const NAMSPACE = "urn:x-cast:aicacia",
 const pc = new RTCPeerConnection({
   iceServers: [
     {
-      urls: window.env.APP_STUN_URL,
+      urls: "stun:stun.l.google.com:19302",
     },
   ],
 });

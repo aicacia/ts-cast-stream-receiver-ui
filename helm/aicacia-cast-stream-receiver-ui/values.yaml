@@ -10,9 +10,6 @@ image:
   pullPolicy: Always
   hash: sha256:f191bb18187c583aabdd8519159f6d80ea86eef5f617fbb7f213c420287e31e8
 
-env:
-  APP_STUN_URL: stun:stun.l.google.com:19302
-
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""

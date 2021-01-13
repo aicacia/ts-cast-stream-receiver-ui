@@ -8,13 +8,11 @@ node_modules/
 .gitignore
 .gitlab-ci.yml
 .npmignore
-Gulpfile.js
-Jenkinsfile
+Gulpfile.ts
 LICENSE-APACHE
 LICENSE-MIT
 package-lock.json
 package.json
-plopfile.js
 README.md
 tsconfig.json
 tslint.json
